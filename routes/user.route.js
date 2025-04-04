@@ -21,7 +21,7 @@ const userRouter = Router();
 userRouter.post("/register", registerUserController);
 userRouter.post("/verifyEmail", verifyEmailController);
 userRouter.post("/login", loginUserController);
-userRouter.post("/logout", auth, logoutController);
+userRouter.get("/logout", auth, logoutController);
 userRouter.post(
   "/userAvatar",
   auth,
@@ -34,6 +34,6 @@ userRouter.post("/forgotPassword", forgotPasswordController);
 userRouter.post("/verifyForgotPasswordOtp", verifyForgotPasswordOtp);
 userRouter.post("/resetPassword", resetPasswordController);
 userRouter.post("/refreshToken", refreshTokenController);
-userRouter.post("/userDetails", auth, userDetailsController);
+userRouter.get("/userDetails", auth, userDetailsController);
 
 export default userRouter;

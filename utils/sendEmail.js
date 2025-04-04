@@ -10,6 +10,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS, // App Password
   },
+  connectionTimeout: 10000, // Set timeout to 10 seconds
 });
 
 async function sendMail(to, subject, text, html) {
@@ -32,7 +33,11 @@ async function sendMail(to, subject, text, html) {
       messageId: info.messageId,
     };
   } catch (error) {
-    console.error("Error sending mail: ", error);
+    if (error.code === 'ETIMEDOUT') {
+      console.error("Error: Connection timed out while sending mail.");
+    } else {
+      console.error("Error sending mail: ", error);
+    }
     return {
       success: false,
       error: error.message,
