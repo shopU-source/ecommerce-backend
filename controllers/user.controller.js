@@ -336,6 +336,7 @@ export async function userAvatarController(req, res) {
 
   return res.status(200).json({
     _id: userId,
+    avatar: imagesArray[0]
   });
 }
 

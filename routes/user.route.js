@@ -22,14 +22,14 @@ userRouter.post("/register", registerUserController);
 userRouter.post("/verifyEmail", verifyEmailController);
 userRouter.post("/login", loginUserController);
 userRouter.get("/logout", auth, logoutController);
-userRouter.post(
+userRouter.put(
   "/userAvatar",
   auth,
   upload.array("avatar"),
   userAvatarController
 );
 userRouter.post("/deleteImage", auth, removeImageFromCloudinary);
-userRouter.post("/update/:id", auth, updateUserDetails);
+userRouter.put("/update/:id", auth, updateUserDetails);
 userRouter.post("/forgotPassword", forgotPasswordController);
 userRouter.post("/verifyForgotPasswordOtp", verifyForgotPasswordOtp);
 userRouter.post("/resetPassword", resetPasswordController);
