@@ -619,7 +619,7 @@ export async function userDetailsController(req, res) {
   const userId = req.userId;
   const user = await UserModel.findById(userId).select(
     "-password -refreshToken"
-  );
+  ).populate("addressDetails");
 
   return res.status(201).json({
     message: "User details",
