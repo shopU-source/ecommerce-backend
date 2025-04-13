@@ -4,7 +4,7 @@ import { addAddressController, getAddressController } from "../controllers/addre
 
 const addressRouter = Router();
 
-addressRouter.post("/add", auth, addAddressController)
-addressRouter.get("/get", auth, getAddressController)
+addressRouter.post("/add", auth, addAddressController);
+addressRouter.get("/get", auth, getAddressController);
 
 export default addressRouter

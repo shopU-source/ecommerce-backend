@@ -2,11 +2,11 @@ import AddressModel from "../models/address.model.js";
 import UserModel from "../models/user.model.js";
 
 export async function addAddressController(req, res) {
-  const { addressLine, city, state, pincode, country, phone, status } = req.body;
+  const { addressLine, city, state, pincode, country, phone, status, selected } = req.body;
   const userId = req.userId
   console.log(userId)
 
-  if (!addressLine || !city || !state || !pincode || !country || !phone) {
+  if (!addressLine || !city || !state || !pincode || !country || !phone || !selected) {
     return res.status(401).json({
       message: "Please provide all the fields",
       error: true,
@@ -15,7 +15,7 @@ export async function addAddressController(req, res) {
   }
 
   const address = new AddressModel({
-    addressLine, city, state, pincode, country, phone, userId, status
+    addressLine, city, state, pincode, country, phone, userId, status, selected
   })
 
   if (!address) {
@@ -87,6 +87,3 @@ export async function getAddressController(req, res) {
   })
 }
 
-export async function selectAddressController(req, res) {
-  
-}
