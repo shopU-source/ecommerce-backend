@@ -14,6 +14,8 @@ let imagesArray = [];
 export async function categoryImageUpload(req, res) {
   const images = req.files;
 
+  imagesArray = [];
+
   const options = {
     use_filename: true,
     unique_filename: false,
@@ -34,7 +36,7 @@ export async function categoryImageUpload(req, res) {
   }
 
   return res.status(200).json({
-    images: imagesArray[0],
+    images: imagesArray,
   });
 }
 
@@ -152,16 +154,18 @@ export async function removeCategoryImageFromCloudinary(req, res) {
   const imageName = image.split(".")[0];
 
   if (imageName) {
-    const res = await cloudinary.uploader.destroy(
+    const response = await cloudinary.uploader.destroy(
       imageName,
       (error, result) => {
         // console.log(error, res)
       }
     );
     if (res) {
-      return res.status(200).json({
-        res,
-      });
+      return res.status(201).json({
+        success: true,
+        error: false,
+        message: "Image deleted"
+      })
     }
   }
 }
@@ -175,7 +179,7 @@ export async function deleteCategoryController(req, res) {
     const image = urlArray[urlArray.length - 1];
     const imageName = image.split(".")[0];
 
-    if (!imageName) {
+    if (imageName) {
       cloudinary.uploader.destroy(imageName, (error, result) => {
         // console.log(error, result)
       });

@@ -21,12 +21,12 @@ categoryRouter.post(
   categoryImageUpload
 );
 categoryRouter.post("/create", auth, createCategoryController);
-categoryRouter.post("/", getCategoryController);
+categoryRouter.get("/", getCategoryController);
 categoryRouter.post("/categoryCount", getCategoryCountController);
 categoryRouter.post("/subCategorycount", getSubCategoryCountController);
-categoryRouter.post("/get/:id", getCategoryById);
-categoryRouter.post("/deleteImage", auth, removeCategoryImageFromCloudinary);
-categoryRouter.post("/deleteCategory/:id", auth, deleteCategoryController);
-categoryRouter.post("/updateCategory/:id", auth, updateCategoryController);
+categoryRouter.get("/get/:id", getCategoryById);
+categoryRouter.delete("/deleteImage", auth, removeCategoryImageFromCloudinary);
+categoryRouter.delete("/deleteCategory/:id", auth, deleteCategoryController);
+categoryRouter.put("/updateCategory/:id", auth, updateCategoryController);
 
 export default categoryRouter;
