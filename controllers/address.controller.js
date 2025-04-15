@@ -2,11 +2,11 @@ import AddressModel from "../models/address.model.js";
 import UserModel from "../models/user.model.js";
 
 export async function addAddressController(req, res) {
-  const { addressLine, city, state, pincode, country, phone, status, selected } = req.body;
+  const { addressLine, city, state, pincode, country, phone, status } = req.body;
   const userId = req.userId
   console.log(userId)
 
-  if (!addressLine || !city || !state || !pincode || !country || !phone || !selected) {
+  if (!addressLine || !city || !state || !pincode || !country || !phone) {
     return res.status(401).json({
       message: "Please provide all the fields",
       error: true,
@@ -15,7 +15,7 @@ export async function addAddressController(req, res) {
   }
 
   const address = new AddressModel({
-    addressLine, city, state, pincode, country, phone, userId, status, selected
+    addressLine, city, state, pincode, country, phone, userId, status
   })
 
   if (!address) {
@@ -75,7 +75,7 @@ export async function getAddressController(req, res) {
       _id: req?.query?.userId
     }, {
       $push: {
-        addressDetails: address?._id
+        Address: address?._id
       }
     })
   }
@@ -87,3 +87,47 @@ export async function getAddressController(req, res) {
   })
 }
 
+export async function deletedAddressController(req, res) {
+  const userId = req.userId
+  const _id = req.params.id
+
+  if (!_id) {
+    return res.status(401).json({
+      message: "Provide id",
+      error: true,
+      success: false
+    })
+  }
+
+  const deleteAddress = await AddressModel.deleteOne({ _id: _id, userId: userId })
+
+  if (deleteAddress.deletedCount === 0) {
+    return res.status(401).json({
+      message: "The address is not available",
+      error: true,
+      success: false
+    })
+  }
+
+  const updateUser = await UserModel.updateOne(
+    { _id: userId },
+    { $pull: { addressDetails: _id } }
+  )
+
+  if (!updateUser.acknowledged) {
+    return res.status(500).json({
+      message: "Failed to update user's address references",
+      error: true,
+      success: false
+    })
+  }
+
+  const remainingAddresses = await AddressModel.find({ userId: userId })
+
+  return res.status(200).json({
+    message: "Address deleted successfully",
+    success: true,
+    error: false,
+    addresses: remainingAddresses
+  })
+}

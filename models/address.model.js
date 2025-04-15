@@ -28,10 +28,6 @@ const addressSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    selected: {
-      type: Boolean,
-      default: true,
-    },
     userId: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
