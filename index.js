@@ -16,10 +16,7 @@ config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: ["https://ecommerce-frontend-psi-kohl.vercel.app", "http://localhost:8000", "https://admin-dashboard-nu-ten-88.vercel.app"],
-  credentials: true
-}))
+app.use(cors())
 app.options("*", cors());
 app.use(express.json());
 app.use(cookieParser());
