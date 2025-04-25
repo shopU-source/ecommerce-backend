@@ -3,6 +3,7 @@ import auth from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multer.middleware.js";
 import {
   createProductController,
+  deleteMultipleProductController,
   deleteProductController,
   getAllFeaturedProductController,
   getAllProductCountController,
@@ -30,41 +31,42 @@ productRouter.post(
   productImageUpload
 );
 productRouter.post("/create", auth, createProductController);
-productRouter.post("/getAllProducts", getAllProductsController);
-productRouter.post(
+productRouter.get("/getAllProducts", getAllProductsController);
+productRouter.get(
   "/getAllProductsByCategoryId/:id",
   getAllProductsByCategoryIdController
 );
-productRouter.post(
+productRouter.get(
   "/getAllProductsByCategoryName",
   getAllProductsByCategoryNameController
 );
-productRouter.post(
+productRouter.get(
   "/getAllProductsBySubCategoryId/:id",
   getAllProductsBySubCategoryIdController
 );
-productRouter.post(
+productRouter.get(
   "/getAllProductsBySubCategoryName",
   getAllProductsBySubCategoryNameController
 );
-productRouter.post(
+productRouter.get(
   "/getAllProductsBythirdSubCategoryId/:id",
   getAllProductsBythirdSubCategoryIdController
 );
-productRouter.post(
+productRouter.get(
   "/getAllProductsBythirdSubCategoryName",
   getAllProductsBythirdSubCategoryNameController
 );
-productRouter.post(
+productRouter.get(
   "/getFilteredProductByPrice",
   getFilteredProductByPriceController
 );
-productRouter.post("/getAllProductsByRating", getAllProductsByRatingController);
-productRouter.post("/getAllProductsCount", getAllProductCountController);
-productRouter.post("/getAllFeaturedProduct", getAllFeaturedProductController);
-productRouter.post("/deleteProduct/:id", deleteProductController);
-productRouter.post("/getProduct/:id", getSingleProductController);
-productRouter.post("/deleteImage", auth, removeProductImageFromCloudinary);
+productRouter.get("/getAllProductsByRating", getAllProductsByRatingController);
+productRouter.get("/getAllProductsCount", getAllProductCountController);
+productRouter.get("/getAllFeaturedProduct", getAllFeaturedProductController);
+productRouter.delete("/deleteProduct/:id", deleteProductController);
+productRouter.delete("/deleteMultiple", deleteMultipleProductController);
+productRouter.get("/getProduct/:id", getSingleProductController);
+productRouter.delete("/deleteImage", auth, removeProductImageFromCloudinary);
 productRouter.post("/updateProduct/:id", auth, updateProductController);
 
 export default productRouter;

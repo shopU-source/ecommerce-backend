@@ -172,18 +172,12 @@ export async function removeCategoryImageFromCloudinary(req, res) {
 
 export async function deleteCategoryController(req, res) {
   const category = await CategoryModel.findById(req.params.id);
-  let images = category.images;
-  for (images of images) {
-    const imageUrl = images;
-    const urlArray = imageUrl.split("/");
-    const image = urlArray[urlArray.length - 1];
-    const imageName = image.split(".")[0];
-
-    if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {
-        // console.log(error, result)
-      });
-    }
+  if (!category) {
+    return res.status(401).json({
+      message: "Category does not exists",
+      success: false,
+      error: true
+    })
   }
 
   const subCategory = await CategoryModel.find({

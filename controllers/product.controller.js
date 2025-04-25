@@ -15,6 +15,8 @@ let imagesArray = [];
 export async function productImageUpload(req, res) {
   const images = req.files;
 
+  imagesArray = [];
+
   const options = {
     use_filename: true,
     unique_filename: false,
@@ -35,7 +37,7 @@ export async function productImageUpload(req, res) {
   }
 
   return res.status(200).json({
-    images: imagesArray[0],
+    images: imagesArray,
   });
 }
 
@@ -47,6 +49,7 @@ export async function createProductController(req, res) {
     brand: req.body.brand,
     price: req.body.price,
     oldPrice: req.body.oldPrice,
+    category: req.body.category,
     categoryName: req.body.categoryName,
     categoryId: req.body.categoryId,
     subCategoryId: req.body.subCategoryId,
@@ -534,6 +537,54 @@ export async function deleteProductController(req, res) {
     success: true,
     error: false,
   });
+}
+
+export async function deleteMultipleProductController(req, res) {
+  const { ids } = req.body;
+
+  if (!ids || !Array.isArray(ids)) {
+    return res.status(400).json({
+      error: true,
+      success: false,
+      message: "Invalid input"
+    })
+  }
+
+  for (let i = 0; i < ids?.length; i++) {
+    const product = await ProductModel.findById(ids[i]);
+
+    const images = product.images;
+    let img = "";
+
+    for (img of images) {
+      const imgUrl = img;
+      const urlArr = imgUrl.split("/")
+      const image = urlArr[urlArr.length - 1];
+
+      const imageName = image.split(".")[0];
+
+      if (imageName) {
+        await cloudinary.uploader.destroy(imageName, (error, result) => {
+          // console.log(error, result);
+        })
+      }
+    }
+  }
+
+  try {
+    await ProductModel.deleteMany({ _id: { $in: ids } })
+    return res.status(200).json({
+      message: "Product deleted successfully",
+      error: false,
+      success: true
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+      error: true,
+      success: false
+    })
+  }
 }
 
 export async function getSingleProductController(req, res) {
