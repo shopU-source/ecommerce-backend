@@ -614,15 +614,15 @@ export async function removeProductImageFromCloudinary(req, res) {
   const imageName = image.split(".")[0];
 
   if (imageName) {
-    const res = await cloudinary.uploader.destroy(
+    const response = await cloudinary.uploader.destroy(
       imageName,
       (error, result) => {
         // console.log(error, res)
       }
     );
-    if (res) {
+    if (response) {
       return res.status(200).json({
-        res,
+        response,
       });
     }
   }
