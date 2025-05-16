@@ -119,3 +119,20 @@ export async function getProductRamsControllers(req, res) {
     success: true
   })
 }
+
+export async function getProductRamById(req, res) {
+  const productRam = await ProductRamsModel.findById({ _id: req.params.id })
+  if (!productRam) {
+    return res.status(401).json({
+      message: "Did not find the Product Ram",
+      error: true,
+      success: false
+    })
+  }
+
+  return res.status(201).json({
+    data: productRam,
+    error: false,
+    success: true
+  })
+}
