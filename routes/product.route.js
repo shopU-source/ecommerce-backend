@@ -67,6 +67,6 @@ productRouter.delete("/deleteProduct/:id", deleteProductController);
 productRouter.delete("/deleteMultiple", deleteMultipleProductController);
 productRouter.get("/getProduct/:id", getSingleProductController);
 productRouter.delete("/deleteImage", auth, removeProductImageFromCloudinary);
-productRouter.post("/updateProduct/:id", auth, updateProductController);
+productRouter.put("/updateProduct/:id", auth, updateProductController);
 
 export default productRouter;

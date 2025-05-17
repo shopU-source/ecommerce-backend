@@ -51,33 +51,6 @@ export async function deleteProductRamsControllers(req, res) {
   })
 }
 
-export async function deleteMultipleProductRamsController(req, res) {
-  const { ids } = req.body;
-
-  if (!ids || !Array.isArray(ids)) {
-    return res.status(400).json({
-      message: "Invalid input",
-      success: false,
-      error: true
-    })
-  }
-
-  try {
-    await ProductRamsModel.deleteMany({ _id: { $in: ids } });
-    return res.status(200).json({
-      message: "Product RAMS deleted successfully",
-      success: true,
-      error: false
-    })
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message || error,
-      success: false,
-      error: true
-    })
-  }
-}
-
 export async function updateProductRamController(req, res) {
   const productRam = await ProductRamsModel.findByIdAndUpdate(
     req.params.id,
@@ -121,7 +94,7 @@ export async function getProductRamsControllers(req, res) {
 }
 
 export async function getProductRamById(req, res) {
-  const productRam = await ProductRamsModel.findById({ _id: req.params.id })
+  const productRam = await ProductRamsModel.findById(req.params.id)
   if (!productRam) {
     return res.status(401).json({
       message: "Did not find the Product Ram",

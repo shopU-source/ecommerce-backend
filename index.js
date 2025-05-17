@@ -12,6 +12,8 @@ import cartRouter from "./routes/cart.route.js";
 import myListRouter from "./routes/myList.route.js";
 import addressRouter from "./routes/address.route.js";
 import productRamRouter from "./routes/productRams.route.js";
+import productWeightRouter from "./routes/productWeight.route.js";
+import productSizeRouter from "./routes/productSize.route.js";
 config();
 
 const app = express();
@@ -39,6 +41,9 @@ app.use("/api/cart", cartRouter);
 app.use("/api/myList", myListRouter);
 app.use("/api/address", addressRouter)
 app.use("/api/productRams", productRamRouter)
+app.use("/api/productWeight", productWeightRouter)
+app.use("/api/productSize", productSizeRouter)
+
 
 app.listen(PORT, async () => {
   await connectionToDB();
