@@ -14,6 +14,7 @@ import addressRouter from "./routes/address.route.js";
 import productRamRouter from "./routes/productRams.route.js";
 import productWeightRouter from "./routes/productWeight.route.js";
 import productSizeRouter from "./routes/productSize.route.js";
+import homeSlideRouter from "./routes/homeSlide.route.js";
 config();
 
 const app = express();
@@ -43,6 +44,7 @@ app.use("/api/address", addressRouter)
 app.use("/api/productRams", productRamRouter)
 app.use("/api/productWeight", productWeightRouter)
 app.use("/api/productSize", productSizeRouter)
+app.use("/api/homeSlide", homeSlideRouter)
 
 
 app.listen(PORT, async () => {

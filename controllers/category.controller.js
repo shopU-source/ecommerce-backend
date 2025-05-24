@@ -10,6 +10,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_CLOUD_APISECRET,
   secure: true,
 });
+
 let imagesArray = [];
 export async function categoryImageUpload(req, res) {
   const images = req.files;
